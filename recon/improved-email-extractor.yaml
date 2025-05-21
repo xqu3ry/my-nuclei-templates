@@ -1,0 +1,71 @@
+id: improved-email-extractor
+
+info:
+  name: Email extractor
+  author: xqu3ry
+  severity: info
+  description: Extract emails from website
+  tags: info, emails, exposure, miscellaneous, misc, email, generic, osint, scraping
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+      - "{{BaseURL}}/.well-known/security.txt"
+      - "{{BaseURL}}/.well-known/contact"
+      - "{{BaseURL}}/.well-known/change-password"
+      - "{{BaseURL}}/dashboard"
+      - "{{BaseURL}}/news"
+      - "{{BaseURL}}/newsletter"
+      - "{{BaseURL}}/newsletters"
+      - "{{BaseURL}}/people"
+      - "{{BaseURL}}/users"
+      - "{{BaseURL}}/docs"
+      - "{{BaseURL}}/email"
+      - "{{BaseURL}}/emails"
+      - "{{BaseURL}}/contact"
+      - "{{BaseURL}}/about"
+      - "{{BaseURL}}/team"
+      - "{{BaseURL}}/sitemap.xml"
+      - "{{BaseURL}}/robots.txt"
+      - "{{BaseURL}}/home"
+      - "{{BaseURL}}/info"
+      - "{{BaseURL}}/user"
+      - "{{BaseURL}}/admin"
+      - "{{BaseURL}}/administrator"
+      - "{{BaseURL}}/contacts"
+      - "{{BaseURL}}/school"
+      - "{{BaseURL}}/university"
+      - "{{BaseURL}}/search"
+      - "{{BaseURL}}/site"
+      - "{{BaseURL}}/about-us"
+      - "{{BaseURL}}/support"
+      - "{{BaseURL}}/help"
+      - "{{BaseURL}}/privacy"
+      - "{{BaseURL}}/privacy-policy"
+      - "{{BaseURL}}/terms"
+      - "{{BaseURL}}/terms-of-service"
+      - "{{BaseURL}}/legal"
+      - "{{BaseURL}}/faq"
+      - "{{BaseURL}}/careers"
+      - "{{BaseURL}}/jobs"
+      - "{{BaseURL}}/job"
+      - "{{BaseURL}}/partners"
+      - "{{BaseURL}}/developers"
+      - "{{BaseURL}}/command"
+      - "{{BaseURL}}/community"
+      - "{{BaseURL}}/commands"
+
+    redirects: true
+    max-redirects: 3
+
+    matchers:
+      - type: regex
+        regex:
+          - '\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b'
+
+    extractors:
+      - type: regex
+        name: emails
+        regex:
+          - '\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b'
