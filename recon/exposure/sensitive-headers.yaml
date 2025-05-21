@@ -1,0 +1,33 @@
+id: sensitive-headers-exposure
+
+info:
+  name: Sensitive Headers Exposure
+  author: xqu3ry
+  severity: low
+  description: >
+    Detects sensitive headers that may reveal software, frameworks, server types, internal IPs or infrastructure.
+  reference:
+    - https://owasp.org/www-project-secure-headers/
+  tags: header,exposure,info,disclosure,headers
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - "(?i)(X-Powered-By|X-AspNet-Version|X-Backend-Server|X-Drupal-Cache|X-PHP-Version|X-Version|X-Hostname|X-Instance-ID|Server:|Via:|CF-Cache-Status|CF-Ray|X-Served-By|X-Generator|X-Wix-Request-Id)"
+
+      - type: regex
+        part: header
+        regex:
+          - "(?i)(Apache|nginx|Ubuntu|PHP/[0-9.]+|Laravel|Express|Werkzeug|gunicorn|IIS|cloudflare|Node\\.js|Python|Varnish)"
+
+    extractors:
+      - type: regex
+        part: header
+        regex:
+          - "(?i)(Server|X-Powered-By|X-PHP-Version|X-AspNet-Version|X-Generator|X-Version|X-Hostname|CF-Cache-Status|CF-Ray|X-Backend-Server):\\s*.*"
